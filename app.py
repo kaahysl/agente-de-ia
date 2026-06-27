@@ -4,9 +4,17 @@ from flask_cors import CORS
 from agno.models.openai import OpenAIChat
 from agno.agent import Agent
 from dotenv import load_dotenv
+from supabase import create_client
+import os
 
 #leitura da chave de api
 load_dotenv()
+#usagndo getenv
+supabase_url = os.getenv("SUPABASE_URL")
+supabase_key = os.getenv("SUPABASE_KEY")
+#Criando a conexão com o banco de dados, passando a URL e a KEY
+supabase = create_client(supabase_url,supabase_key)
+
 app=Flask(__name__)
 #Criar 
 CORS(app)
@@ -31,6 +39,18 @@ def pergunta():
     pergunta= dados ['pergunta']
     resposta= agente.run(pergunta)
     return jsonify({"resposta":resposta.content})
+#Criar a rota para reservas
+@app.route("/reserva", methods=['POST'])
+def reservas():
+    dados = request.get_json()
+    nova_reserva ={
+        "nome":dados["nome"],
+        "email":dados["email"],
+        "check_in":dados["check_in"],
+        "tipo_quarto":dados["tipo_quarto"]
+    }
+    supabase.table("reservas").insert(nova_reserva).execute()
+    return jsonify({"mensagem":"Sua reserva foi realizada com sucesso!"})
 
 if __name__=='__main__':
-    app.run(host="0.0.0.0", port=8000)
+     app.run(host="0.0.0.0", port=8000)
