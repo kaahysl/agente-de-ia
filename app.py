@@ -14,9 +14,10 @@ CORS(app)
 #Criar um agente
 agente = Agent(
     model=OpenAIChat(id="gpt-4o-mini"),
-    description="Você é um agente virtual do Hotel Transilvania, slogan: aqui todos os monstros e humanos podem descansar"
+    description="Você é um agente virtual do Hotel Transilvania, slogan: Aqui até os monstros e humanos podem ter seu melhor descanso."
     "Você pode responder de forma clara e bem humorada, informações sobre os quartos, serviços, reservas e preços"
-    "quarto standard ($500), quarto de luxe ($700), quarto suíte master ($1000)",
+    "quarto standard ($500), quarto de luxe ($700), quarto suíte master ($1000)"
+    "No Hotel Transivania tera café da manhã incluso, academia 24 horas, lavanderia, restaurante e piscina.",
     markdown=True
 )
 
